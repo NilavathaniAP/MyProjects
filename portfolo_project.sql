@@ -34,6 +34,17 @@ where continent != ' '
 group by continent
 order by totaldeaths desc
 
+--vaccination VS cases VS death
+select cast(cd.date as date)as date_, sum(cast(cv.new_vaccinations as float)), sum(cast(cd.new_deaths as float)) as death, sum(cast(cd.new_cases as float)) as cases
+, cast(new_deaths as float) / nullif(cast(new_vaccinations as float), 0) * 100 as death_rate
+, (cast(cd.new_cases as float)/ nullif(cast(cv.new_vaccinations as float),0)*100) as case_rate
+from PortfolioProject..CovidDeaths cd
+join PortfolioProject..CovidVaccinations cv
+on cd.date=cv.date and cd.location =cv.location
+where cd.continent != ' '
+group by cast(cd.date as date), cast(cd.new_deaths as float), cast(cd.new_cases as float),cast(cv.new_vaccinations as float)
+order by convert(date, cd.date,103)
+    
 --for location
 select top 1000 location, max(cast(total_deaths as int)) as totaldeaths
 from PortfolioProject..CovidDeaths
@@ -130,3 +141,5 @@ FROM
     sys.views
 WHERE 
     name = 'people_vaccinated';
+
+
