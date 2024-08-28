@@ -3,29 +3,35 @@ from PortfolioProject..CovidDeaths
 where continent != ' '
 order by 3,4
 
---selcet *
+--select *
 --from portfolio..covidvaccinations
 
 
 --total cases Vs total deaths
-select top 100 location, date, total_cases, total_deaths, round(convert(float,total_deaths)/nullif(convert(float,total_cases),0)*100,2) as death_per
+select top 100 location, date, total_cases, total_deaths
+    , round(convert(float,total_deaths)/nullif(convert(float,total_cases),0)*100,2) as death_per
 from PortfolioProject..CovidDeaths
 where location = 'india'
 ORDER BY 1,CONVERT(DATE, date, 103)
 
+    
 --total cases Vs population
-select top 1000 location, date, total_cases, population, round(convert(float,total_cases)/nullif(convert(float,population),0)*100,2) as overall_pop_per
+select top 1000 location, date, total_cases, population
+    , round(convert(float,total_cases)/nullif(convert(float,population),0)*100,2) as overall_pop_per
 from PortfolioProject..CovidDeaths
 where location = 'india'
 ORDER BY 1,CONVERT(DATE, date, 103)
 
+    
 --highest infection compared to population
-select top 1000 location, max(total_cases), population, max(round(convert(float,total_cases)/nullif(convert(float,population),0)*100,2)) as infection_percent
+select top 1000 location, max(total_cases), population
+    , max(round(convert(float,total_cases)/nullif(convert(float,population),0)*100,2)) as infection_percent
 from PortfolioProject..CovidDeaths
 --where location = 'india'
 group by location, population
 order by infection_percent desc
 
+    
 --highest death count per population
 select top 1000 continent, max(cast(total_deaths as int)) as totaldeaths
 from PortfolioProject..CovidDeaths
@@ -34,16 +40,22 @@ where continent != ' '
 group by continent
 order by totaldeaths desc
 
+    
 --vaccination VS cases VS death
-select cast(cd.date as date)as date_, sum(cast(cv.new_vaccinations as float)), sum(cast(cd.new_deaths as float)) as death, sum(cast(cd.new_cases as float)) as cases
+select cast(cd.date as date)as date_
+    , sum(cast(cv.new_vaccinations as float))
+    , sum(cast(cd.new_deaths as float)) as death
+    , sum(cast(cd.new_cases as float)) as cases
 , cast(new_deaths as float) / nullif(cast(new_vaccinations as float), 0) * 100 as death_rate
 , (cast(cd.new_cases as float)/ nullif(cast(cv.new_vaccinations as float),0)*100) as case_rate
 from PortfolioProject..CovidDeaths cd
 join PortfolioProject..CovidVaccinations cv
 on cd.date=cv.date and cd.location =cv.location
 where cd.continent != ' '
-group by cast(cd.date as date), cast(cd.new_deaths as float), cast(cd.new_cases as float),cast(cv.new_vaccinations as float)
+group by cast(cd.date as date), cast(cd.new_deaths as float)
+    , cast(cd.new_cases as float),cast(cv.new_vaccinations as float)
 order by convert(date, cd.date,103)
+
     
 --for location
 select top 1000 location, max(cast(total_deaths as int)) as totaldeaths
@@ -55,12 +67,14 @@ order by totaldeaths desc
 
 
 --global numbers death rate
-select top 500  sum(cast(new_cases as int)) as casescount, sum(cast(total_deaths as float)) as deathcount, round(sum(cast(new_deaths as float))/nullif(sum(cast(new_cases as float)),0)*100,2) as deathrate
+select top 500  sum(cast(new_cases as int)) as casescount, sum(cast(total_deaths as float)) as deathcount
+    , round(sum(cast(new_deaths as float))/nullif(sum(cast(new_cases as float)),0)*100,2) as deathrate
 from PortfolioProject..CovidDeaths
 where continent != ' '
 --group by date
 ORDER BY 1,2
 
+    
 --total population vs vaccination
 select cd.continent, cd.location,cd.date, cd.population, cv.new_vaccinations
 , sum(cast(new_vaccinations as float)) over (partition by cd.location order by cd.location, convert(date,cd.date,103)) as rolling_peoplevaccinated
@@ -71,7 +85,9 @@ and cd.date=cv.date
 where cd.continent != ' '
 order by 2,convert(date, cd.date, 103)
 
+    
 --using CTE(Common Table Expression)
+    
 with popvsvac (continent, location,date, population, new_vaccinations,roll_peoplevac)
 as
 (
@@ -88,7 +104,8 @@ select *, (roll_peoplevac/nullif(CAST(population as int),0))*100 as people_vacci
 from popvsvac
 where location = 'india'
 
---use temp table
+    
+--using temp table
 
 drop table if exists #tempvacc
 create table #tempvacc
@@ -128,7 +145,8 @@ where cd.continent != ' '
 
 select * from people_vaccinated
 
-drop view if exists people_vaccinated;
+--drop view if exists people_vaccinated;
+
 
 --to view the scheme name of the view
 USE PortfolioProject;
