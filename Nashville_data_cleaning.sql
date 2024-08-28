@@ -5,8 +5,8 @@ SELECT top (1000) *
 
 
 --CREATING INDEX
-  --create index idx_nash
-  --on portfolioproject..nash(uniqueid)
+  create index idx_nash
+  on portfolioproject..nash(uniqueid)
 
 
 --Cleaning date format
@@ -23,7 +23,7 @@ set saledate2= convert(date, SaleDate);
 --drop column saledate2
 
 
--- Populating null property address data
+-- Populating null property address data using ParcelID
 SELECT *
   FROM [PortfolioProject].[dbo].[Nash]
   --where PropertyAddress is null
@@ -44,7 +44,8 @@ set PropertyAddress =  isnull(a.PropertyAddress,b.PropertyAddress)
   and a.UniqueID <> b.UniqueID
   where a.PropertyAddress is null
 
---Breaking Adress as Address, City, State
+	
+--Breaking Address as Address, City, State
 SELECT PropertyAddress
   FROM [PortfolioProject].[dbo].[Nash]
 
@@ -61,7 +62,8 @@ from portfolioproject..nash
 update nash
 set Property_City= substring(propertyaddress,charindex(',',propertyaddress) +2, len(propertyaddress))
 
---for owner address
+	
+--for owner address useing PARSENAME
 select substring(propertyaddress,1,charindex(',',propertyaddress) -1) as Address,
 substring(propertyaddress,charindex(',',propertyaddress) +2, len(propertyaddress)) as City
 
@@ -95,7 +97,7 @@ SELECT top (1000) *
   FROM [PortfolioProject].[dbo].[Nash]
 
 
---Change Y & N to Yes & No
+--Standardising Y & N to Yes & No
 SELECT SoldAsVacant
 , case when SoldAsVacant = 'N' then 'No'
      when SoldAsVacant = 'Y' then 'Yes'
@@ -109,7 +111,8 @@ set SoldAsVacant = case when SoldAsVacant = 'N' then 'No'
 	 else SoldAsVacant
 	 end
 
---removing duplicates where row number > 1 are dulipcates 
+	
+--removing duplicates using row_number  where > 1 are dulipcates 
 
 with rownum as(
 select * ,
