@@ -33,7 +33,7 @@ Focused on cleaning and transforming the Nashville housing dataset to ensure its
 
 ## Repository
 
-- [GitHub Repository](https://github.com/NilavathaniAP/PortfolioProjects/) - Access the complete code and documentation for both projects here.
+- [GitHub Repository](https://github.com/NilavathaniAP/MyProjects) - Access the complete code and documentation for both projects here.
 
 ## Installation
 
