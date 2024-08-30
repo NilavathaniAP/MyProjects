@@ -12,9 +12,9 @@ For an in-depth analysis and the development of the mathematical models used, pl
 
 In Manufaturing Management,
 
-🔹 **Break-Even Analysis**:  The break-even point is the moment where
+🔹 **Break-Even Analysis**:  The break-even point *(BEP)* is the moment where
  revenue equals costs exactly. At this moment, neither a profit nor a loss has been made.
- Sales beyond that amount generate profit, while sales below that amount generate a loss
+ Sales beyond that amount generate profit, while sales below that amount generate a loss. ***Recursive CTE*** techniques and VIEWs have been used to provide results for BEP.
 
 The formula to calculate \( Q \) is:
 
@@ -26,7 +26,10 @@ where Q - Quantity ; F - Fixed cost ; p - Selling price ; V - Variable cose
 
 🔹 **Cumulative Work Hours**: Measuring the total labor required throughout the entire supply chain to ensure efficiency. 
 Production work hours decrease by a certain percentage each time the quantity produced
- doubles. It is referred to as the cumulative average work hours model. In the project I used 90% progress rate, hence $$\phi$$ = 0.9 and the 
+ doubles. It is referred to as the cumulative average work hours model. In the project I used 90% progress rate, hence $$\phi$$ = 0.9.
+ ***Optimised SQL techniques*** have been used instead of long rows of subqueris.
+ 
+ The 
  formula to calculate the Cumulative work hours ($$T_n$$) is given by,
 
 $$
