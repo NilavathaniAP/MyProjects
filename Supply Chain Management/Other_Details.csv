@@ -1,0 +1,12 @@
+Code,Description,Category,Value
+FC,Fixed Cost,Cost,600.00
+VC,Variable Cost,Cost,45.50
+SP,Selling Price,Revenue,55.00
+WH,Work hours per strip,Hours,0.25
+ICM,Item cost per unit,Cost,20.00
+HCM,Holding cost per unit,Cost,10.00
+PR,Production Rate,Units/Period,200
+GR,Group Replcement,Cost,20.00
+UR,Unit Replcement,Cost,40.00
+ICP,Item Cost per unit,Cost,40.00
+HCP,Holding cost per unit,Cost,20.00
