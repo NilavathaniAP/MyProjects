@@ -23,7 +23,7 @@ Hello! I'm **Nila**, a **Data Engineer** with a strong passion for **data analys
 
 ### Projects 🚀
 
-One of the projects in this repository involves **supply chain management**. It is an extract from my research and showcases my work in optimizing and analyzing supply chain processes. It's still under process but currently completed 1/3rd of it. Do check it out!
+One of the projects in this repository involves operational techniques for **supply chain management**. It is an extract from my research and showcases my work in optimizing and analyzing supply chain processes. It's still under process but currently completed 1/3rd of it. Do check it out!
 
 ### Contact 📫
 
