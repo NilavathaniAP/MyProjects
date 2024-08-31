@@ -133,11 +133,9 @@ from SCM..[Other_Details ]
 --Finding work hours for progress rate for 90%
 declare @pr float;
 declare @wh float;
-declare @de float;
 
 select @pr = log(0.9)/log(2) ;
 select @wh = value from scm..[Other_Details ] where code='wh'
-select @de =  demand from scm..manufacturer
 
 select Month, Year, Demand, round((@wh/(1+@pr))*
    (power(Demand+0.5,1+@pr)-POWER(0.5,1+@pr)),2)
