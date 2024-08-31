@@ -30,7 +30,7 @@ One of the projects in this repository involves operational techniques for **sup
 Feel free to reach out to me via:
 
 - **Email**: [nilavathani027@gmail.com]
-- **LinkedIn**: [https://www.linkedin.com/in/nilavathani-a-p-b65543235/]
+- **LinkedIn**: [https://www.linkedin.com/in/nilavathani-a-p/]
 - **GitHub**: [[Your GitHub profile link](https://github.com/NilavathaniAP/MyProjects)]
 
 Thank you for visiting my repository! 😊
