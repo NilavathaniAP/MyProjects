@@ -14,7 +14,7 @@ Hello! I'm **Nila**, a **Data Engineer** with a strong passion for **data analys
   - SQL
   - T-SQL
   - Data Analysis
-  - Power BI (currently learning)
+ 
 - **Interests**: 
   - Data analysis
   - Operational Research
