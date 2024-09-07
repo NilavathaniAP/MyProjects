@@ -21,6 +21,19 @@ For an in-depth analysis and the development of the mathematical models used, pl
 - `MIN` Function
 - Z-Score Calculation
 
+## Installation
+
+To work with the SQL scripts, ensure you have:
+1. An SQL Server environment (e.g., MS SQL Server or SQL Server Management Studio).
+2. Access to datasets formatted similarly to those described in the projects (or use the datset included in this folder).
+
+## Usage
+
+1. Load the SQL scripts into your SQL Server environment.
+2. Load these datasets
+3. Execute the scripts for each project to perform the analysis or data cleaning tasks.
+4. Review the results to gain insights or verify data quality.
+
 ### Analyses Highlights:
 
 For the formulas used in these analyses and their explanations, please refer to [Analyses_Explained.md](https://github.com/NilavathaniAP/MyProjects/blob/main/Supply%20Chain%20Management/Analyses_Explained.md). This document provides a detailed briefing on each topic and the key methods approached via SQL.
