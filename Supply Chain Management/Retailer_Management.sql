@@ -266,3 +266,27 @@ from ur join gr
 on ur.orderid= gr.orderid
 join t_c
 on ur.orderid= t_c.orderid
+
+--SAFETY STOCK ANALYSIS
+
+declare @service_level float 
+
+--inverse function for 95% 
+set @service_level = 1.64;
+
+with find_ss as (
+select distinct year
+, avg(cast(demand as float)) as avg_demand
+, avg(Procurement_Lead_Time) as avg_lead_time
+, stdev(cast(demand as float)) as std_demand
+, stdev(Procurement_Lead_Time) as std_lead_time
+from scm..retailer
+group by year
+)
+select avg_demand
+, avg_demand
+,std_lead_time
+, std_demand
+, round(sqrt(((std_demand*std_demand)+avg_lead_time) + ((avg_demand*avg_demand)+(std_lead_time*std_lead_time))),2) as combined_std
+, round(sqrt(((std_demand*std_demand)+avg_lead_time) + ((avg_demand*avg_demand)+(std_lead_time*std_lead_time))),2)*@service_level as service_level
+from find_ss
