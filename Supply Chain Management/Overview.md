@@ -23,7 +23,7 @@ For an in-depth analysis and the development of the mathematical models used, pl
 
 ### Analyses Highlights:
 
-For the formulas used in these analyses and their explanations, please refer to [Formulas_Explained.md](https://github.com/NilavathaniAP/MyProjects/blob/main/Supply%20Chain%20Management/Formulas_Explained.md). This document provides a detailed briefing on each topic and the key methods approached via SQL.
+For the formulas used in these analyses and their explanations, please refer to [Analyses_Explained.md](https://github.com/NilavathaniAP/MyProjects/blob/main/Supply%20Chain%20Management/Analyses_Explained.md). This document provides a detailed briefing on each topic and the key methods approached via SQL.
 
 🔹 **Data Cleaning**: 
 - Utilized the `PARSENAME` and `REPLACE` function to extract and handle specific parts of the data. This was particularly useful for separating components within a column, such as Year and Month into multiple segments.
