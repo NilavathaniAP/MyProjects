@@ -121,12 +121,14 @@ set day_s6 = day_s5-Day_6
 drop table if exists #xt
 
 create table #xt
-(Orderid numeric, p_0 float, p_1 float, p_2 float,
-p_3 float, p_4 float, p_5 float, p_6 float, 
-x_0 float, x_1 float, x_2 float, x_3 float,
-x_4 float, x_5 float, x_6 float);
+(
+Orderid numeric,
+p_0 float, p_1 float, p_2 float, p_3 float,
+p_4 float, p_5 float, p_6 float, x_0 float,
+x_1 float, x_2 float, x_3 float, x_4 float,
+x_5 float, x_6 float, sx_1 float, sx_2 float,
+sx_3 float, sx_4 float, sx_5 float, sx_6 float);
 
---Using Recursive CTE method for simplified calculation process
 with p_t as(
 select OrderID,
 0 as p_0 ,
@@ -146,7 +148,7 @@ select
 f.orderid,
 cast(f.Demand as float) as x_0,
 cast(f.Demand*pt.p_1 as float) as x_1
-, cast(null as float) as x_2                                     --use NULL as placeholder for recursive usage
+, cast(null as float) as x_2 --placeholder for recursive usage
 , cast(null as float) as x_3
 , cast(null as float) as x_4
 , cast(null as float) as x_5
@@ -167,35 +169,100 @@ fx.OrderID
 ,cast((fx.x_0*pt.p_4) +(fx.x_1*pt.p_3)+(fx.x_2*pt.p_2)+(fx.x_3*pt.p_1) as float)as x_4
 ,cast((fx.x_0*pt.p_5) +(fx.x_1*pt.p_4)+(fx.x_2*pt.p_3)+(fx.x_3*pt.p_2)+(fx.x_4*pt.p_1) as float) as x_5
 ,cast((fx.x_0*pt.p_6) +(fx.x_1*pt.p_5)+(fx.x_2*pt.p_4)+(fx.x_3*pt.p_3)+(fx.x_4*pt.p_2) +(fx.x_5*pt.p_1) as float)as x_6
-, fx.level+1 as level  
+, fx.level+1 as level
 from finding_xt fx
 join p_t pt
 on fx.OrderID=pt.OrderID
-where fx.level <6                                                         --controls from infinite recurrsion
-)
- 
-insert into #xt(Orderid,p_0,p_1,p_2,p_3,p_4,p_5,p_6,x_0,x_1,x_2,x_3,x_4,x_5,x_6)
-select 
-fx.OrderID,
-max(pt.p_0) as x_0, max(pt.p_1) as x_1, max(pt.p_2) as x_2 
-,max(pt.p_3) as x_3, max(pt.p_4) as x_4, max(pt.p_5) as x_5 
-,max(pt.p_6) as x_6, max(fx.x_0) as x_0, max(fx.x_1) as x_1,
-max(fx.x_2) as x_2, max(fx.x_3) as x_3, max(fx.x_4) as x_4
-,max(fx.x_5) as x_5, max(fx.x_6) as x_6                                   --use max to filter out repeatition
-from finding_xt fx
-join p_t pt
-on fx.OrderID=pt.OrderID
-group by fx.OrderID
+where fx.level <6 --control from infinite recurrsion
+),
 
-select * from #xt
-
---finding summation of xt for each day
-select 0 as sx_1
+--summation of xt
+yt as (
+select OrderID,
+0 as sx_1
 ,x_1 as sx_2
 ,x_1+x_2 as sx_3,
 x_1+x_2+x_3 as sx_4
 ,x_1+x_2+x_3+x_4 as sx_5
 ,x_1+x_2+x_3+x_4 +x_5 as sx_6
-from #xt
+from finding_xt xt )
+
+insert into #xt(Orderid,p_0,p_1,p_2,p_3,p_4,p_5,p_6,x_0,x_1,x_2,x_3,x_4,x_5,x_6,sx_1,sx_2,sx_3,sx_4,sx_5,sx_6)
+select 
+fx.OrderID,
+max(pt.p_0) as x_0
+,max(pt.p_1) as x_1,
+max(pt.p_2) as x_2 
+,max(pt.p_3) as x_3 
+,max(pt.p_4) as x_4
+,max(pt.p_5) as x_5 
+,max(pt.p_6) as x_6,
+max(fx.x_0) as x_0
+,max(fx.x_1) as x_1,
+max(fx.x_2) as x_2 
+,max(fx.x_3) as x_3 
+,max(fx.x_4) as x_4
+,max(fx.x_5) as x_5 
+,max(fx.x_6) as x_6 --use max to filter out repeatition
+,max(yt.sx_1) as sx_1,
+max(yt.sx_2) as sx_2 
+,max(yt.sx_3) as sx_3 
+,max(yt.sx_4) as sx_4
+,max(yt.sx_5) as sx_5 
+,max(yt.sx_6) as sx_6 
+from finding_xt fx
+join p_t pt
+on fx.OrderID=pt.OrderID
+join yt
+on fx.OrderID = yt.OrderID
+group by fx.OrderID
+
+select * from #xt
+
+--finding the minimum cost
+declare @ur float;
+select @ur = value  from SCM..[Other_Details ] where Code = 'ur';
+declare @gr float;
+select @gr = Value  from SCM..[Other_Details ] where Code = 'gr';
 
 --finding unit cost
+with ur as(
+select orderid, @ur*sx_1/1 as ur_1
+, @ur*sx_2/2 as ur_2
+, @ur*sx_3/3 as ur_3
+, @ur*sx_4/4 as ur_4
+, @ur*sx_5/5 as ur_5
+, @ur*sx_6/6 as ur_6
+from #xt),
+
+--finding group cost
+gr as(
+select orderid, @gr*day_s0/1 as gr_1
+, @gr*day_s0/2 as gr_2
+, @gr*day_s0/3 as gr_3
+, @gr*day_s0/4 as gr_4
+, @gr*day_s0/5 as gr_5
+, @gr*day_s0/6 as gr_6
+from scm..Failed),
+
+--finding total cost
+t_c as (
+select ur.Orderid
+, ur.ur_1+gr.gr_1 as tc_1
+, ur.ur_2+gr.gr_2 as tc_2
+, ur.ur_3+gr.gr_3 as tc_3
+, ur.ur_4+gr.gr_4 as tc_4
+, ur.ur_5+gr.gr_5 as tc_5
+, ur.ur_6+gr.gr_6 as tc_6
+from ur join gr
+on ur.orderid= gr.orderid)
+
+select 
+ur_1,ur_2,ur_3,ur_4,ur_5,ur_6,
+gr_1,gr_2,gr_3,gr_4,gr_5,gr_6,
+tc_1,tc_2,tc_3,tc_4,tc_5,tc_6,
+least(tc_1,tc_2,tc_3,tc_4,tc_5,tc_6) as Minimum
+from ur join gr
+on ur.orderid= gr.orderid
+join t_c
+on ur.orderid= t_c.orderid
