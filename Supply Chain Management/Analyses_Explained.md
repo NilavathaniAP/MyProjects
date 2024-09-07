@@ -2,6 +2,8 @@
 
 For an in-depth analysis and the development of the mathematical models used, please explore the details of my [project](https://drive.google.com/file/d/1o-VWM3CXqsH7KAjNRYN_PLMT2Md5Pbpi/view?usp=sharing).
 
+Overview on the topics and techniques used, is given in [Overview.md](https://github.com/NilavathaniAP/MyProjects/blob/main/Supply%20Chain%20Management/Overview.md)
+
 ### Key Analyses Conducted:
 
 In Manufaturing Management,
@@ -53,7 +55,7 @@ $$
 
 where T - lead time in periods ; $$C_p$$ - procurement cost per procurement ; $$C_h$$ - holding cost per unit per period ; $$C_i$$ - tem cost per unit ; $$R$$ - replenishment rate in units per period
 
-Additionally, the project will soon expand to include:
+In Retailer Management,
 
 🔸 **Replacement Analysis**:  It is critical to examine the drugs and
  replace those that have failed or become disoriented. We should also be aware that group
