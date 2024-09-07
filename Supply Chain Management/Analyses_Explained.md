@@ -1,11 +1,5 @@
 # Comprehensive Supply Chain Strategy for Ampicillin Delivery in Chennai 
 
-## Project Overview
-
-This project is dedicated to crafting a **cost-effective supply chain strategy** for the distribution of **Ampicillin** to the people of **Chennai**, ensuring that it is accessible to all socioeconomic classes. By addressing the intricacies of pharmaceutical distribution throughout, the goal is to optimize costs while maintaining high-quality healthcare standards.
-
-The data for this project was collected from a local pharmacy, and the manufacturing data reflects this specific pharmacy's operations rather than company-wide data.
-
 For an in-depth analysis and the development of the mathematical models used, please explore the details of my [project](https://drive.google.com/file/d/1o-VWM3CXqsH7KAjNRYN_PLMT2Md5Pbpi/view?usp=sharing).
 
 ### Key Analyses Conducted:
@@ -61,10 +55,32 @@ where T - lead time in periods ; $$C_p$$ - procurement cost per procurement ; $$
 
 Additionally, the project will soon expand to include:
 
-🔸 **Retailer Management Analysis**: Investigating the role of retailers, this involves managing stock, forecasting demand,
- and optimizing supply chain operations to meet consumer needs. The goal is to enhance profitability and customer satisfaction
- by ensuring products are available when and where they are needed without incurring excess costs or inventory waste.
+🔸 **Replacement Analysis**:  It is critical to examine the drugs and
+ replace those that have failed or become disoriented. We should also be aware that group
+ replacements may be a smart choice to consider on occasion, as it reduces transportation
+ costs or provides the shop with lower purchasing costs, as manufacturers frequently sell
+ bulk products at a lower price than individual units. This part seeks to discover which day we have to 
+ group that will provide us with the  lowest replacement cost.
 
-This project is a critical step toward ensuring that vital medications like Ampicillin reach every patient in need, through an optimized and data-driven supply chain.
+ Since, $\ TC=UC+GC$
 
-Stay tuned for detailed analyses and future updates as this project progresses!
+ $$UC\=\ \frac{C_u\displaystyle\sum^{t-1}x_t}{t}$$
+
+ $$GC\=\\frac{C_gN_0}{t}$$
+
+ $$TC_{min}=\ \frac{C_u\displaystyle\sum^{t-1}x_t}{t}\+\ \frac{C_gN_0}{t}$$
+
+where $UC$ - Unit Cost, $C_u$ - unit cost replacement per unit, $GC$- Group Cost, $C_g$ - group cost replacement per unit, $TC$ - Total Cost
+
+🔸 **Safety Stock Analysis**:  The goal of the safety stock is to compensate for demand and supply fluctuations. The
+ assumption for service components planning is that the supply side is closely monitored
+ in order to reduce deviations from planning to a minimum, and that supply-side uncer
+tainty is low in comparison to demand-side uncertainty.
+
+100 percent
+ coverage would necessitate infinite safety stock, while 80-90 percent coverage is attainable
+ and typical with acceptable safety stock.
+
+ $$Safety \ Stock = C\sqrt{\mu_L\sigma_D^2+\mu_D^2\sigma_L^2}$$
+
+ where $C$- normal inverse of the percentage of service level
