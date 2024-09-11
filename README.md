@@ -12,7 +12,7 @@ Hello! I'm **Nila**, a **Data Engineer** with a strong passion for **data analys
 
 - **Skills**: 
   - SQL
-  - T-SQL
+  - Python
   - Data Analysis
  
 - **Interests**: 
